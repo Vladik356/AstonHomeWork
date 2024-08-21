@@ -4,17 +4,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class FactorialCalculatorTest {
 
     @Test
-    void testFactorial() {
-        assertEquals(1, FactorialCalculator.factorial(0));
-        assertEquals(1, FactorialCalculator.factorial(1));
-        assertEquals(2, FactorialCalculator.factorial(2));
-        assertEquals(6, FactorialCalculator.factorial(3));
-        assertEquals(24, FactorialCalculator.factorial(4));
-        assertEquals(120, FactorialCalculator.factorial(5));
+    void testFactorialOfZero() {
+        FactorialCalculator calculator = new FactorialCalculator();
+        assertEquals(1, calculator.factorial(0));
     }
 
     @Test
-    void testFactorialNegative() {
-        assertThrows(IllegalArgumentException.class, () -> FactorialCalculator.factorial(-1));
+    void testFactorialOfPositiveNumber() {
+        FactorialCalculator calculator = new FactorialCalculator();
+        assertEquals(120, calculator.factorial(5));
+    }
+
+    @Test
+    void testFactorialOfNegativeNumber() {
+        FactorialCalculator calculator = new FactorialCalculator();
+        assertThrows(IllegalArgumentException.class, () -> calculator.factorial(-1));
     }
 }
