@@ -21,7 +21,7 @@ public class MtsByTests {
 
         System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
         driver = new ChromeDriver();
-        driver.get("https://www.mts.by/");
+        driver.get("https://www.mts.by");
     }
 
     @AfterAll
