@@ -69,6 +69,6 @@ public class MtsByTests {
 
 
         continueButton.click();
-        
+
     }
 }
