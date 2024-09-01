@@ -12,7 +12,7 @@ public class BaseTest {
     @BeforeEach
     public void setUp() {
 
-        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "C:/AstonHW/Lesson/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://www.mts.by/");
     }
