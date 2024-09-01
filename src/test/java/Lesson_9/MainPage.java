@@ -16,8 +16,8 @@ public class MainPage {
     private By debtOptionLocator = By.xpath("//label[text()='Задолженность']");
     private By phoneNumberInputLocator = By.id("297777777");
     private By continueButtonLocator = By.xpath("//button[text()='Продолжить']");
-    private By cardInputPlaceholderLocator = By.id("card-number-placeholder"); 
-    private By paymentIconLocator = By.xpath("//img[@alt='Visa']"); // Например, иконка Visa
+    private By cardInputPlaceholderLocator = By.id("4627 1001 0165 4724");
+    private By paymentIconLocator = By.xpath("//img[@alt='Visa']"); // Карта - Visa
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
