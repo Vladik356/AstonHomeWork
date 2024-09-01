@@ -18,7 +18,7 @@ public class MtsByTests {
     @BeforeEach
     public void setUp() {
 
-        System.setProperty("webdriver.chrome.driver", "C:\\AstonHW\\Lesson");
+        System.setProperty("webdriver.chrome.driver", "C:/AstonHW/Lesson/chromedriver.exe");
         driver = new ChromeDriver();
         driver.get("https://www.mts.by/");
     }
@@ -49,7 +49,7 @@ public class MtsByTests {
 
         WebElement moreInfoLink = driver.findElement(By.xpath("//a[text()='Подробнее о сервисе']"));
         moreInfoLink.click();
-        String expectedUrl = "https://www.mts.by/bonus/mts_bonus/"; // Подтвердите правильность URL
+        String expectedUrl = "https://www.mts.by/bonus/mts_bonus/"; 
         assertEquals(expectedUrl, driver.getCurrentUrl(), "Неверный URL после перехода по ссылке 'Подробнее о сервисе'");
     }
 
