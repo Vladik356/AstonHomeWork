@@ -50,7 +50,6 @@ public class MtsByTests {
 
     @Test
     public void testPaymentForServiceOption() {
-        homePage.openPaymentPage();
         paymentPage.selectServiceOption();
         paymentPage.enterPhoneNumber("297777777");
         paymentPage.enterAmount("10");
