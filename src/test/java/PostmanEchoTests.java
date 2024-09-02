@@ -24,7 +24,7 @@ public class PostmanEchoTests {
 
         JSONObject expectedResponse = new JSONObject();
         expectedResponse.put("args", new JSONObject());
-        expectedResponse.put("headers", new JSONObject()); // Заполните ожидаемые заголовки
+        expectedResponse.put("headers", new JSONObject());
         expectedResponse.put("url", BASE_URL + "/get");
 
         JSONObject jsonResponse = new JSONObject(response.asString());
@@ -94,7 +94,7 @@ public class PostmanEchoTests {
 
         JSONObject expectedResponse = new JSONObject();
         expectedResponse.put("args", new JSONObject());
-        expectedResponse.put("headers", new JSONObject()); // Заполните ожидаемые заголовки
+        expectedResponse.put("headers", new JSONObject());
         expectedResponse.put("url", BASE_URL + "/delete");
 
         JSONObject jsonResponse = new JSONObject(response.asString());
