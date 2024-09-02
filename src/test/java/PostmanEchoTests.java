@@ -22,18 +22,107 @@ public class PostmanEchoTests {
                 .extract()
                 .response();
 
-        // Создание ожидаемого JSON объекта
         JSONObject expectedResponse = new JSONObject();
         expectedResponse.put("args", new JSONObject());
         expectedResponse.put("headers", new JSONObject()); // Заполните ожидаемые заголовки
         expectedResponse.put("url", BASE_URL + "/get");
 
-        // Преобразуем тело ответа в JSONObject
         JSONObject jsonResponse = new JSONObject(response.asString());
 
-        // Проверяем, что JSON тело ответа совпадает с ожидаемым
         assertEquals(expectedResponse.toString(), jsonResponse.toString());
     }
 
-    // Добавьте аналогичные тесты для POST, PUT, DELETE, PATCH методов
+    @Test
+    public void testPostMethod() {
+        RestAssured.baseURI = BASE_URL;
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("foo", "bar");
+
+        Response response = given()
+                .body(requestBody.toString())
+                .when()
+                .post("/post")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        JSONObject expectedResponse = new JSONObject();
+        expectedResponse.put("data", requestBody.toString());
+
+        JSONObject jsonResponse = new JSONObject(response.asString());
+
+        assertEquals(expectedResponse.getString("data"), jsonResponse.getString("data"));
+    }
+
+    @Test
+    public void testPutMethod() {
+        RestAssured.baseURI = BASE_URL;
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("foo", "bar");
+
+        Response response = given()
+                .body(requestBody.toString())
+                .when()
+                .put("/put")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        JSONObject expectedResponse = new JSONObject();
+        expectedResponse.put("data", requestBody.toString());
+
+        JSONObject jsonResponse = new JSONObject(response.asString());
+
+        assertEquals(expectedResponse.getString("data"), jsonResponse.getString("data"));
+    }
+
+    @Test
+    public void testDeleteMethod() {
+        RestAssured.baseURI = BASE_URL;
+
+        Response response = given()
+                .when()
+                .delete("/delete")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        JSONObject expectedResponse = new JSONObject();
+        expectedResponse.put("args", new JSONObject());
+        expectedResponse.put("headers", new JSONObject()); // Заполните ожидаемые заголовки
+        expectedResponse.put("url", BASE_URL + "/delete");
+
+        JSONObject jsonResponse = new JSONObject(response.asString());
+
+        assertEquals(expectedResponse.toString(), jsonResponse.toString());
+    }
+
+    @Test
+    public void testPatchMethod() {
+        RestAssured.baseURI = BASE_URL;
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("foo", "bar");
+
+        Response response = given()
+                .body(requestBody.toString())
+                .when()
+                .patch("/patch")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response();
+
+        JSONObject expectedResponse = new JSONObject();
+        expectedResponse.put("data", requestBody.toString());
+
+        JSONObject jsonResponse = new JSONObject(response.asString());
+
+        assertEquals(expectedResponse.getString("data"), jsonResponse.getString("data"));
+    }
 }
