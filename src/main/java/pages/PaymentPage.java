@@ -3,81 +3,77 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class PaymentPage {
+
     private WebDriver driver;
+    private WebDriverWait wait;
 
-    // Локаторы для элементов
-    private By phoneNumberField = By.name("phone");
-    private By continueButton = By.xpath("//button[contains(text(), 'Продолжить')]");
-    private By amountField = By.name("amount");
-    private By errorMessage = By.className("error-message");
-
-    // Локаторы для проверки надписей в незаполненных полях
-    private By phoneNumberPlaceholder = By.xpath("//input[@name='phone']/@placeholder");
-    private By amountPlaceholder = By.xpath("//input[@name='amount']/@placeholder");
-
-    // Локаторы для различных типов услуг
-    private By serviceOption = By.xpath("//label[contains(text(), 'Услуги связи')]");
-    private By internetOption = By.xpath("//label[contains(text(), 'Домашний интернет')]");
-    private By installmentOption = By.xpath("//label[contains(text(), 'Рассрочка')]");
-    private By debtOption = By.xpath("//label[contains(text(), 'Задолженность')]");
-
-    // Локаторы для элементов окна подтверждения
-    private By confirmationWindow = By.className("confirmation-window");
-    private By confirmationAmount = By.xpath("//div[@class='confirmation-amount']");
-    private By confirmationPhone = By.xpath("//div[@class='confirmation-phone']");
-    private By cardPlaceholder = By.xpath("//input[@name='card-number']/@placeholder");
-
-    // Локаторы для иконок платёжных систем
-    private By paymentIcons = By.xpath("//div[@class='payment-systems']//img");
-
+    // Конструктор
     public PaymentPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
 
-    // Методы взаимодействия с элементами
+    // Локаторы
+    private By serviceOption = By.xpath("//label[text()='Услуги связи']");
+    private By internetOption = By.xpath("//label[text()='Домашний интернет']");
+    private By installmentOption = By.xpath("//label[text()='Рассрочка']");
+    private By debtOption = By.xpath("//label[text()='Задолженность']");
+    public By phoneNumberInput = By.id("phone-number-input");
+    private By continueButton = By.xpath("//button[text()='Продолжить']");
+    public By cardNumberPlaceholder = By.id("card-number-placeholder");
+    public By visaLogo = By.xpath("//img[@alt='Visa']");
+    public By masterCardLogo = By.xpath("//img[@alt='MasterCard']");
+    private By amountText = By.xpath("//span[@id='amount']");
+    private By phoneNumberDisplay = By.xpath("//span[@id='phone-number']");
+
+    // Методы взаимодействия с элементами страницы
     public void selectServiceOption() {
-        driver.findElement(serviceOption).click();
+        wait.until(ExpectedConditions.elementToBeClickable(serviceOption)).click();
+    }
+
+    public void selectInternetOption() {
+        wait.until(ExpectedConditions.elementToBeClickable(internetOption)).click();
+    }
+
+    public void selectInstallmentOption() {
+        wait.until(ExpectedConditions.elementToBeClickable(installmentOption)).click();
+    }
+
+    public void selectDebtOption() {
+        wait.until(ExpectedConditions.elementToBeClickable(debtOption)).click();
     }
 
     public void enterPhoneNumber(String phoneNumber) {
-        driver.findElement(phoneNumberField).sendKeys(phoneNumber);
-    }
-
-    public void enterAmount(String amount) {
-        driver.findElement(amountField).sendKeys(amount);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(phoneNumberInput)).sendKeys(phoneNumber);
     }
 
     public void clickContinueButton() {
-        driver.findElement(continueButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(continueButton)).click();
     }
 
-    public String getPhoneNumberPlaceholder() {
-        return driver.findElement(phoneNumberPlaceholder).getAttribute("placeholder");
+    public String getPlaceholderText(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).getAttribute("placeholder");
     }
 
-    public String getAmountPlaceholder() {
-        return driver.findElement(amountPlaceholder).getAttribute("placeholder");
+    public boolean isPaymentIconDisplayed(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
     }
 
-    public boolean isConfirmationWindowDisplayed() {
-        return driver.findElement(confirmationWindow).isDisplayed();
+    public String getAmountText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(amountText)).getText();
     }
 
-    public String getConfirmationAmount() {
-        return driver.findElement(confirmationAmount).getText();
+    public String getPhoneNumberDisplayText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(phoneNumberDisplay)).getText();
     }
 
-    public String getConfirmationPhone() {
-        return driver.findElement(confirmationPhone).getText();
-    }
-
-    public String getCardPlaceholder() {
-        return driver.findElement(cardPlaceholder).getAttribute("placeholder");
-    }
-
-    public boolean arePaymentIconsDisplayed() {
-        return driver.findElements(paymentIcons).size() > 0;
+    public String getContinueButtonText() {
+        return wait.until(ExpectedConditions.elementToBeClickable(continueButton)).getText();
     }
 }
