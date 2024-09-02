@@ -40,7 +40,7 @@ public class MtsByTests {
 
     @Test
     public void testCheckPlaceholdersForServiceOptions() {
-        homePage.openPaymentPage(); // Откроем страницу пополнения
+        homePage.openPaymentPage();
         paymentPage.selectServiceOption();
 
         // Проверяем плейсхолдеры для полей в разных вариантах
