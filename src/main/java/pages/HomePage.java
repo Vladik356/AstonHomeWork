@@ -22,7 +22,7 @@ public class HomePage {
         return element != null && element.isDisplayed();
     }
 
-    // Метод для клика по ссылке "Подробнее о сервисе"
+    // Метод для клика "Подробнее о сервисе"
     public void clickMoreInfoLink() {
         driver.findElement(moreInfoLink).click();
     }
