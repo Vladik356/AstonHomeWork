@@ -22,6 +22,6 @@ public class HomePage {
     }
 
     public void openPaymentPage() {
-
+        driver.findElement(paymentBlock).click();
     }
 }
