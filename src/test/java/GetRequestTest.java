@@ -18,6 +18,6 @@ public class GetRequestTest extends BaseTest {
                 .body("args.foo2", equalTo("bar2"))
                 .extract().response();
 
-        // Additional checks if needed
+
     }
 }

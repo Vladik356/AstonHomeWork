@@ -14,6 +14,6 @@ public class PatchRequestTest extends BaseTest {
                 .patch("/patch")
                 .then()
                 .statusCode(200)
-                .body("json.foo", equalTo("bar"));  // Проверка поля "foo" в объекте "json"
+                .body("json.foo", equalTo("bar"));
     }
 }
