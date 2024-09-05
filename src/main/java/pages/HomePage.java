@@ -7,11 +7,11 @@ import org.openqa.selenium.WebElement;
 public class HomePage {
     private WebDriver driver;
 
-    // Локаторы
+    
     private By paymentBlock = By.xpath("//h2[contains(text(), 'Онлайн пополнение без комиссии')]");
     private By moreInfoLink = By.xpath("//a[contains(text(), 'Подробнее о сервисе')]");
 
-    // Конструктор
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
     }
