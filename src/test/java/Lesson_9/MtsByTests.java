@@ -53,6 +53,8 @@ public class MtsByTests {
             acceptCookiesButton.click();
         } catch (Exception e) {
             System.out.println("Окно куки закрыто");
+
+            WebElement paymentBlock = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[contains(text(), 'Онлайн пополнение без комиссии')]")));
             assertTrue(homePage.isPaymentBlockPresent(), "Блок 'Онлайн пополнение без комиссии' не отображается на главной странице");
         }
     }
