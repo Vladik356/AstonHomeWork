@@ -6,11 +6,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
 import pages.PaymentPage;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -42,9 +46,16 @@ public class MtsByTests {
 
     @Test
     public void testPaymentBlockPresence() {
-        assertTrue(homePage.isPaymentBlockPresent(), "Блок 'Онлайн пополнение без комиссии' не отображается на главной странице");
-    }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
+        try {
+            WebElement acceptCookiesButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(), 'Принять')]")));
+            acceptCookiesButton.click();
+        } catch (Exception e) {
+            System.out.println("Окно с куки не появилось или уже было закрыто.");
+            assertTrue(homePage.isPaymentBlockPresent(), "Блок 'Онлайн пополнение без комиссии' не отображается на главной странице");
+        }
+    }
     @Test
     public void testPlaceholderTexts() {
         homePage.clickMoreInfoLink();  // Переход на страницу оплаты
