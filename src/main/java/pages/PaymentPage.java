@@ -13,7 +13,7 @@ public class PaymentPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Конструктор
+   
     public PaymentPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
