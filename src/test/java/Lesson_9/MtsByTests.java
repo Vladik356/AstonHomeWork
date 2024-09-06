@@ -11,6 +11,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import pages.HomePage;
 import pages.PaymentPage;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,18 +23,14 @@ public class MtsByTests {
     private PaymentPage paymentPage;
 
     @BeforeEach
-    public void setUp() {
-        WebDriverManager.chromedriver().setup();
-
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incognito");
-
-        driver = new ChromeDriver(options);
-        driver.get("https://www.mts.by/");
-
-
-        homePage = new HomePage(driver);
-        paymentPage = new PaymentPage(driver);
+        public void setUp() {
+            System.setProperty("webdriver.chrome.driver", "C:/AstonHW/Lesson/chromedriver.exe");
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.get("https://www.mts.by/");
+            homePage = new HomePage(driver);
+            paymentPage = new PaymentPage(driver);
     }
 
     @AfterEach
