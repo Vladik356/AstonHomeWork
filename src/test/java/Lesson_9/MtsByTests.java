@@ -8,33 +8,31 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
 import pages.PaymentPage;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtsByTests {
 
     private WebDriver driver;
+    private WebDriverWait wait;
     private HomePage homePage;
     private PaymentPage paymentPage;
 
     @BeforeEach
-        public void setUp() {
-            System.setProperty("webdriver.chrome.driver", "C:/AstonHW/Lesson/chromedriver.exe");
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            driver.get("https://www.mts.by/");
-            homePage = new HomePage(driver);
-            paymentPage = new PaymentPage(driver);
+    public void setUp() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        driver.get("https://www.mts.by/");
+        homePage = new HomePage(driver);
+        paymentPage = new PaymentPage(driver);
     }
 
     @AfterEach
@@ -46,32 +44,43 @@ public class MtsByTests {
 
     @Test
     public void testPaymentBlockPresence() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
         try {
-            WebElement acceptCookiesButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(), 'Принять')]")));
+            // Ожидание куки
+            WebElement acceptCookiesButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='cookie-agree']")));
             acceptCookiesButton.click();
         } catch (Exception e) {
-            System.out.println("Окно куки закрыто");
-
-            WebElement paymentBlock = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[contains(text(), 'Онлайн пополнение без комиссии')]")));
-            assertTrue(homePage.isPaymentBlockPresent(), "Блок 'Онлайн пополнение без комиссии' не отображается на главной странице");
+            System.out.println("Окно куки закрыто или кнопка не найдена.");
         }
+
+        // Ожидание блока оплаты
+        WebElement paymentBlock = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='pay-section']/div/div/div[2]/section/div/h2")));
+        assertTrue(paymentBlock.isDisplayed(), "Блок 'Онлайн пополнение без комиссии' не найден.");
     }
+
     @Test
     public void testPlaceholderTexts() {
         homePage.clickMoreInfoLink();  // Переход на страницу оплаты
-        assertEquals("Введите номер телефона", paymentPage.getPlaceholderText(By.id("phone-number-input")), "Неправильный placeholder для 'Услуги связи'");
+
+        WebElement phoneNumberField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("connection-phone")));
+        assertEquals("Номер телефона", phoneNumberField.getAttribute("placeholder"), "Неправильный плейсхолдер для 'Услуги связи'");
     }
 
     @Test
     public void testContinueButtonForServices() {
         homePage.clickMoreInfoLink();  // Переход на страницу оплаты
         paymentPage.selectServiceOption();
-        paymentPage.enterPhoneNumber("297777777");
-        paymentPage.clickContinueButton();
 
-        // Проверка суммы
-        assertEquals("10.00 BYN", paymentPage.getAmountText(), "Некорректная сумма");
+        // Ожидание поля ввода номера телефона
+        WebElement phoneNumberField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone")));
+        phoneNumberField.sendKeys("297777777");
+
+        // Ожидание кнопки продолжения
+        WebElement continueButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(), 'Продолжить')]")));
+        assertTrue(continueButton.isDisplayed(), "Кнопка 'Продолжить' не найдена.");
+        continueButton.click();
+
+        // Ожидание и проверка суммы
+        WebElement amountElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("amount")));
+        assertEquals("10.00 BYN", amountElement.getText(), "Некорректная сумма");
     }
 }
