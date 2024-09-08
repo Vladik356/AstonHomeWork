@@ -6,17 +6,14 @@ import org.openqa.selenium.WebDriver;
 public class PaymentPage {
     private WebDriver driver;
 
-    // Локаторы для элементов
     private By phoneNumberField = By.name("phone");
     private By continueButton = By.xpath("//button[contains(text(), 'Продолжить')]");
     private By amountField = By.name("amount");
     private By errorMessage = By.className("error-message");
 
-    // Локаторы для проверки надписей в незаполненных полях
     private By phoneNumberPlaceholder = By.xpath("//input[@name='phone']/@placeholder");
     private By amountPlaceholder = By.xpath("//input[@name='amount']/@placeholder");
 
-    // Локаторы для различных типов услуг
     private By serviceOption = By.xpath("//label[contains(text(), 'Услуги связи')]");
     private By internetOption = By.xpath("//label[contains(text(), 'Домашний интернет')]");
     private By installmentOption = By.xpath("//label[contains(text(), 'Рассрочка')]");
@@ -34,8 +31,7 @@ public class PaymentPage {
     public PaymentPage(WebDriver driver) {
         this.driver = driver;
     }
-
-    // Методы взаимодействия с элементами
+    
     public void selectServiceOption() {
         driver.findElement(serviceOption).click();
     }
