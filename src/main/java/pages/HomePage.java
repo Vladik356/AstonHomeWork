@@ -16,18 +16,15 @@ public class HomePage {
         this.driver = driver;
     }
 
-    // Метод для проверки наличия блока оплаты
     public boolean isPaymentBlockPresent() {
         WebElement element = driver.findElement(paymentBlock);
         return element != null && element.isDisplayed();
     }
 
-    // Метод для клика "Подробнее о сервисе"
     public void clickMoreInfoLink() {
         driver.findElement(moreInfoLink).click();
     }
 
-    // Метод для перехода к странице оплаты
     public PaymentPage openPaymentPage() {
         clickMoreInfoLink();
         return new PaymentPage(driver);
