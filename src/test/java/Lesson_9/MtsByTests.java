@@ -74,10 +74,10 @@ public class MtsByTests {
         WebElement phoneNumberField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone")));
         phoneNumberField.sendKeys("297777777");
 
-        // Ожидание кнопки продолжения
-        WebElement continueButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(), 'Продолжить')]")));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+        WebElement continueButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='pay-connection']/button")));
         assertTrue(continueButton.isDisplayed(), "Кнопка 'Продолжить' не найдена.");
-        continueButton.click();
 
         // Ожидание и проверка суммы
         WebElement amountElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("amount")));
