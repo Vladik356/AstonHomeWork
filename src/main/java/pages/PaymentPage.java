@@ -31,7 +31,7 @@ public class PaymentPage {
     public PaymentPage(WebDriver driver) {
         this.driver = driver;
     }
-    
+
     public void selectServiceOption() {
         driver.findElement(serviceOption).click();
     }
